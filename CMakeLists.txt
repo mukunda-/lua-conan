@@ -1,7 +1,7 @@
 #------------------------------------------------------------------------------
 # CMake buildscript for Lua 5.3.5
 #------------------------------------------------------------------------------
-cmake_minimum_required( VERSION 3.13 )
+cmake_minimum_required( VERSION 3.15 )
 project( lua C )
 
 #------------------------------------------------------------------------------
@@ -9,7 +9,6 @@ project( lua C )
 #------------------------------------------------------------------------------
 include( ${CMAKE_BINARY_DIR}/conanbuildinfo.cmake )
 conan_basic_setup()
-conan_global_flags() # This adds compiler and link options from the user.
 
 #------------------------------------------------------------------------------
 # List of source files.
