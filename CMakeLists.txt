@@ -4,11 +4,13 @@
 cmake_minimum_required( VERSION 3.15 )
 project( lua C )
 
-#------------------------------------------------------------------------------
 # Import compiler settings from CONAN.
-#------------------------------------------------------------------------------
 include( ${CMAKE_BINARY_DIR}/conanbuildinfo.cmake )
 conan_basic_setup()
+
+if( NOT LUA_DISABLE_IPO )
+   set( CMAKE_INTERPROCEDURAL_OPTIMIZATION_RELEASE True )
+endif()
 
 #------------------------------------------------------------------------------
 # List of source files.
@@ -35,6 +37,7 @@ add_library( lua53 ${LIB_FILES} )
 #------------------------------------------------------------------------------
 add_executable( lua src/lua.c )
 target_link_libraries( lua lua53 )
+set_target_properties( lua PROPERTIES DEBUG_POSTFIX "d" )
 
 #------------------------------------------------------------------------------
 # Lua compiler target.

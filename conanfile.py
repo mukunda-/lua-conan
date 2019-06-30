@@ -16,9 +16,9 @@ class LuaConan(ConanFile):
    settings        = "os", "compiler", "arch", "build_type"
    generators      = "cmake"
    
-   # lto: Use link-time optimization for Release build type.
-   options         = { "lto": [True,False] }
-   default_options = { "lto": True }
+   # Release mode will link with LTO. Use this to disable that.
+   options         = { "disable_lto": [True,False] }
+   default_options = { "disable_lto": False }
 
    #---------------------------------------------------------------------------
    def source( self ):
@@ -34,9 +34,7 @@ class LuaConan(ConanFile):
       
       cmake.configure( 
          defs = {
-            "CMAKE_INTERPROCEDURAL_OPTIMIZATION":
-               self.options.lto 
-               and self.settings.build_type == "Release"
+            "LUA_DISABLE_IPO": self.options.disable_lto
          })
       
       cmake.build()
@@ -54,7 +52,7 @@ class LuaConan(ConanFile):
    #---------------------------------------------------------------------------
    def package_info( self ):
       self.cpp_info.libs = ["lua53"]
-      if self.options.lto and self.settings.build_type == "Release":
-         self.user_info.using_lto = True
+      if self.settings.build_type == "Release":
+         self.user_info.disable_ipo = self.options.disable_lto
       
       
