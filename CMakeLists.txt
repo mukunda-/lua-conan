@@ -31,13 +31,13 @@ set( LIB_FILES
 # Main Lua library target.
 #------------------------------------------------------------------------------
 add_library( lua53 ${LIB_FILES} )
+set_target_properties( lua53 PROPERTIES DEBUG_POSTFIX "d" )
 
 #------------------------------------------------------------------------------
 # Lua interpreter target.
 #------------------------------------------------------------------------------
 add_executable( lua src/lua.c )
 target_link_libraries( lua lua53 )
-set_target_properties( lua PROPERTIES DEBUG_POSTFIX "d" )
 
 #------------------------------------------------------------------------------
 # Lua compiler target.
