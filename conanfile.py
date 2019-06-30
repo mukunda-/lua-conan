@@ -51,7 +51,7 @@ class LuaConan(ConanFile):
    
    #---------------------------------------------------------------------------
    def package_info( self ):
-      self.cpp_info.libs = ["lua53"]
+      self.cpp_info.libs = tools.collect_libs(self)
       if self.settings.build_type == "Release":
          self.user_info.disable_ipo = self.options.disable_lto
       
