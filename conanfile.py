@@ -27,31 +27,11 @@ class LuaConan(ConanFile):
       shutil.move( "lua-5.3.5/src", "src" )
       shutil.move( "luaconf.h", "src/luaconf.h" )
       shutil.move( "lua.hpp", "src/lua.hpp" )
-   
-   #---------------------------------------------------------------------------   
-   #def use_lto( self ):
-   #   return (self.options.lto and self.settings.compiler == "Visual Studio"
-   #           and self.settings.build_type == "Release")
-   
-   def add_cmake_definition( self, cmake, key, value ):
-      if not cmake.definitions[key]:
-         cmake.definitions[key] = value
-      else:
-         cmake.definitions[key] += " " + value
-              
+       
    #---------------------------------------------------------------------------   
    def build( self ):
       cmake = CMake( self )
       
-      #if self.use_lto():
-         #if self.settings.compiler == "Visual Studio":
-            
-            #cmake.definitions["CONAN_C_FLAGS"] += " /GL /Oi"
-            #cmake.definitions["CONAN_EXE_LINKER_FLAGS"] += " /LTCG:incremental"
-            #self.add_cmake_definition( cmake, "CONAN_C_FLAGS", "/GL /Oi" )
-            # for lua.exe and luac.exe
-            #self.add_cmake_definition( cmake, "CONAN_EXE_LINKER_FLAGS", "/LTCG:incremental" )
-            
       cmake.configure( 
          defs = {
             "CMAKE_INTERPROCEDURAL_OPTIMIZATION":
@@ -76,9 +56,5 @@ class LuaConan(ConanFile):
       self.cpp_info.libs = ["lua53"]
       if self.options.lto and self.settings.build_type == "Release":
          self.user_info.using_lto = True
-         #if self.settings.compiler == "msvc":
-         #   self.cpp_info.cflags = ["/GL", "/Oi"]
-         #   # Do we need this in the package info?
-         #   #self.cpp_info.exelinkflags = ["/LTCG:incremental"]
       
       
